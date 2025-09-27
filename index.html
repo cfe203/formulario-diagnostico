@@ -6,87 +6,21 @@
     <title>Chatmind - Diagnóstico Empresarial Gratuito</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilos Gerais */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-
-        /* Estilos e Animações dos Slides */
-        .slide-container {
-            position: relative;
-            min-height: 480px; /* Altura mínima para evitar que o container encolha na transição */
-        }
-
-        .slide {
-            display: none; /* Inicia oculto */
-            opacity: 0;
-            transform: translateX(30px);
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-            position: absolute; /* Permite que os slides sobreponham-se durante a transição */
-            width: calc(100% - 4rem); /* Ajusta a largura para caber no padding do container */
-        }
-        
-        @media (max-width: 768px) {
-            .slide {
-                width: calc(100% - 2rem); /* Padding menor em telas pequenas */
-            }
-        }
-
-        .slide.active {
-            display: block;
-            opacity: 1;
-            transform: translateX(0);
-            position: relative; /* O slide ativo ocupa o espaço no layout */
-        }
-        
-        /* Outros Estilos */
-        .progress-bar {
-            transition: width 0.4s ease-in-out;
-        }
-
-        .card-shadow {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .btn-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .option-card.selected {
-            border-color: #7c3aed; /* Cor roxa (purple-600) */
-            background-color: #f3f4f6; /* Cor cinza (gray-100) */
-            box-shadow: 0 0 0 2px #a78bfa; /* Anel roxo claro (violet-400) */
-        }
-        
-        .input-error {
-            border-color: #ef4444 !important; /* Cor vermelha (red-500) */
-        }
-
-        .error-message {
-            color: #ef4444; /* red-500 */
-            font-size: 0.875rem; /* text-sm */
-            margin-top: 0.5rem; /* mt-2 */
-            display: none; /* Começa escondido */
-        }
-
-        .error-message.show {
-            display: block; /* Mostra a mensagem de erro */
-        }
+        body { box-sizing: border-box; }
+        .slide-container { position: relative; min-height: 480px; }
+        .slide { display: none; opacity: 0; transform: translateX(30px); transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; position: absolute; width: calc(100% - 4rem); }
+        @media (max-width: 768px) { .slide { width: calc(100% - 2rem); } }
+        .slide.active { display: block; opacity: 1; transform: translateX(0); position: relative; }
+        .progress-bar { transition: width 0.4s ease-in-out; }
+        .gradient-bg { background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%); }
+        .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .option-card.selected { border-color: #7c3aed; background-color: #f3f4f6; box-shadow: 0 0 0 2px #a78bfa; }
+        .input-error { border-color: #ef4444 !important; }
+        .error-message { color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem; display: none; }
+        .error-message.show { display: block; }
     </style>
 </head>
 <body class="gradient-bg min-h-screen flex items-center justify-center p-4">
@@ -96,16 +30,12 @@
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-wider"> CHATMIND </h1>
             <p class="text-xl text-white/90 max-w-2xl mx-auto"> Soluções Inteligentes em Automação e IA para Empresas </p>
         </header>
-
         <div class="mb-8">
             <div class="bg-white/20 rounded-full h-2">
                 <div id="progressBar" class="progress-bar bg-white h-2 rounded-full"></div>
             </div>
-            <p class="text-white/80 text-center mt-2">
-                Etapa <span id="currentStep">1</span> de <span id="totalSteps">7</span>
-            </p>
+            <p class="text-white/80 text-center mt-2">Etapa <span id="currentStep">1</span> de <span id="totalSteps">7</span></p>
         </div>
-
         <div class="bg-white rounded-2xl card-shadow p-4 md:p-12 overflow-hidden">
             <form id="diagnosticsForm" class="slide-container">
                 <div class="slide active" id="slide1">
@@ -124,31 +54,24 @@
                         <button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover transition-all duration-300">Iniciar Diagnóstico</button>
                     </div>
                 </div>
-
                 <div class="slide" id="slide2">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados Básicos</h2>
                     <div class="space-y-6">
                         <div>
                             <label for="nome" class="block text-gray-700 font-semibold mb-2">Nome Completo *</label>
-                            <input type="text" id="nome" name="nome" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="Digite seu nome completo" required>
-                            <p class="error-message"></p>
+                            <input type="text" id="nome" name="nome" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="Digite seu nome completo" required><p class="error-message"></p>
                         </div>
                         <div>
                             <label for="empresa" class="block text-gray-700 font-semibold mb-2">Nome da Empresa *</label>
-                            <input type="text" id="empresa" name="empresa" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="Digite o nome da empresa" required>
-                            <p class="error-message"></p>
+                            <input type="text" id="empresa" name="empresa" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="Digite o nome da empresa" required><p class="error-message"></p>
                         </div>
                         <div>
                             <label for="cargo" class="block text-gray-700 font-semibold mb-2">Cargo/Função</label>
                             <input type="text" id="cargo" name="cargo" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="Ex: CEO, Diretor, Gerente">
                         </div>
                     </div>
-                    <div class="flex justify-between mt-8">
-                        <button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button>
-                        <button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button>
-                    </div>
+                    <div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button></div>
                 </div>
-                
                 <div class="slide" id="slide3">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Segmento da Empresa</h2>
                     <p class="text-gray-600 mb-6">Selecione o segmento que melhor descreve sua empresa:</p>
@@ -161,12 +84,8 @@
                         <div data-value="Outro" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Outro Segmento</h3><p class="text-gray-600 pointer-events-none">Outros setores não listados</p></div>
                         <input type="hidden" id="tipoEmpresa" name="tipoEmpresa">
                     </div>
-                    <div class="flex justify-between mt-8">
-                        <button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button>
-                        <button type="button" id="nextBtn3" class="btn-next bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Continuar</button>
-                    </div>
+                    <div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" id="nextBtn3" class="btn-next bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Continuar</button></div>
                 </div>
-
                 <div class="slide" id="slide4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Principais Desafios Empresariais</h2>
                     <p class="text-gray-600 mb-6">Selecione todos os desafios que sua empresa enfrenta atualmente:</p>
@@ -177,104 +96,48 @@
                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Falta de dados organizados"><span class="ml-3 text-lg">Falta de dados organizados para tomada de decisão</span></label>
                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Comunicação interna deficiente"><span class="ml-3 text-lg">Comunicação interna deficiente entre equipes</span></label>
                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Perda de oportunidades de venda"><span class="ml-3 text-lg">Perda de oportunidades por falta de follow-up</span></label>
-                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Gestão de estoque inadequada"><span class="ml-3 text-lg">Gestão de estoque inadequada</span></label>
-                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Controle financeiro deficiente"><span class="ml-3 text-lg">Controle financeiro deficiente</span></label>
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Gestão de estoque inadequada"><span class="ml-3 text-lg">Gestão de estoque inadequada</span></label>
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dores" class="form-checkbox h-5 w-5 text-purple-600 rounded" value="Controle financeiro deficiente"><span class="ml-3 text-lg">Controle financeiro deficiente</span></label>
                     </div>
-                    <div class="flex justify-between mt-8">
-                        <button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button>
-                        <button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button>
-                    </div>
+                    <div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button></div>
                 </div>
-
                 <div class="slide" id="slide5">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Objetivos de Melhoria</h2>
-                    <p class="text-gray-600 mb-4">Descreva detalhadamente os principais pontos que você gostaria de otimizar ou automatizar no seu negócio:</p>
-                    <textarea id="melhorias" name="melhorias" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg h-40 resize-none" placeholder="Ex: Automatizar o atendimento inicial, integrar sistemas de vendas..."></textarea>
-                    <div class="flex justify-between mt-8">
-                        <button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button>
-                        <button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button>
-                    </div>
+                    <p class="text-gray-600 mb-4">Descreva detalhadamente os principais pontos que você gostaria de otimizar ou automatizar:</p>
+                    <textarea id="melhorias" name="melhorias" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg h-40 resize-none" placeholder="Ex: Automatizar o atendimento inicial, integrar sistemas..."></textarea>
+                    <div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button></div>
                 </div>
-
                 <div class="slide" id="slide6">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Conhecimento sobre IA</h2>
-                    <p class="text-gray-600 mb-6">Qual é o seu nível de conhecimento sobre como a Inteligência Artificial pode ajudar seu negócio?</p>
+                    <p class="text-gray-600 mb-6">Qual é o seu nível de conhecimento sobre como a IA pode ajudar seu negócio?</p>
                     <div class="space-y-4">
                         <div data-value="Iniciante" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Iniciante</h3><p class="text-gray-600 pointer-events-none">Preciso de orientação completa sobre as possibilidades.</p></div>
                         <div data-value="Intermediário" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Intermediário</h3><p class="text-gray-600 pointer-events-none">Tenho ideias, mas gostaria de validar a viabilidade.</p></div>
                         <div data-value="Avançado" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Avançado</h3><p class="text-gray-600 pointer-events-none">Tenho clareza sobre as soluções e busco implementação.</p></div>
                         <input type="hidden" id="conhecimentoIA" name="conhecimentoIA">
                     </div>
-                    <div class="flex justify-between mt-8">
-                        <button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button>
-                        <button type="button" id="nextBtn6" class="btn-next bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Continuar</button>
-                    </div>
+                    <div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" id="nextBtn6" class="btn-next bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Continuar</button></div>
                 </div>
-                
                 <div class="slide" id="slide7">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados para Contato</h2>
                     <div class="space-y-6">
-                        <div>
-                            <label for="email" class="block text-gray-700 font-semibold mb-2">E-mail Corporativo *</label>
-                            <input type="email" id="email" name="email" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="seu@empresa.com" required>
-                            <p class="error-message"></p>
-                        </div>
-                        <div>
-                            <label for="whatsapp" class="block text-gray-700 font-semibold mb-2">WhatsApp *</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="(11) 99999-9999" required>
-                            <p class="error-message"></p>
-                        </div>
-                        <div>
-                            <label for="horario" class="block text-gray-700 font-semibold mb-2">Melhor Horário para Contato</label>
-                            <select id="horario" name="horario" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg bg-white">
-                                <option value="">Selecione o horário preferencial</option>
-                                <option value="Manhã (8h às 12h)">Manhã (8h às 12h)</option>
-                                <option value="Tarde (12h às 18h)">Tarde (12h às 18h)</option>
-                                <option value="Noite (18h às 22h)">Noite (18h às 22h)</option>
-                                <option value="Qualquer horário">Qualquer horário comercial</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="orcamento" class="block text-gray-700 font-semibold mb-2">Orçamento Estimado (Opcional)</label>
-                            <select id="orcamento" name="orcamento" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg bg-white">
-                                <option value="">Selecione uma faixa de investimento</option>
-                                <option value="Até R$ 5.000">Até R$ 5.000</option>
-                                <option value="R$ 5.000 - R$ 15.000">R$ 5.000 - R$ 15.000</option>
-                                <option value="R$ 15.000 - R$ 30.000">R$ 15.000 - R$ 30.000</option>
-                                <option value="R$ 30.000 - R$ 50.000">R$ 30.000 - R$ 50.000</option>
-                                <option value="Acima de R$ 50.000">Acima de R$ 50.000</option>
-                                <option value="A definir">A definir após apresentação</option>
-                            </select>
-                        </div>
+                        <div><label for="email" class="block text-gray-700 font-semibold mb-2">E-mail Corporativo *</label><input type="email" id="email" name="email" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="seu@empresa.com" required><p class="error-message"></p></div>
+                        <div><label for="whatsapp" class="block text-gray-700 font-semibold mb-2">WhatsApp *</label><input type="tel" id="whatsapp" name="whatsapp" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="(11) 99999-9999" required><p class="error-message"></p></div>
+                        <div><label for="horario" class="block text-gray-700 font-semibold mb-2">Melhor Horário para Contato</label><select id="horario" name="horario" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg bg-white"><option value="">Selecione o horário preferencial</option><option value="Manhã (8h às 12h)">Manhã (8h às 12h)</option><option value="Tarde (12h às 18h)">Tarde (12h às 18h)</option><option value="Noite (18h às 22h)">Noite (18h às 22h)</option><option value="Qualquer horário">Qualquer horário comercial</option></select></div>
+                        <div><label for="orcamento" class="block text-gray-700 font-semibold mb-2">Orçamento Estimado (Opcional)</label><select id="orcamento" name="orcamento" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg bg-white"><option value="">Selecione uma faixa de investimento</option><option value="Até R$ 5.000">Até R$ 5.000</option><option value="R$ 5.000 - R$ 15.000">R$ 5.000 - R$ 15.000</option><option value="R$ 15.000 - R$ 30.000">R$ 15.000 - R$ 30.000</option><option value="R$ 30.000 - R$ 50.000">R$ 30.000 - R$ 50.000</option><option value="Acima de R$ 50.000">Acima de R$ 50.000</option><option value="A definir">A definir após apresentação</option></select></div>
                     </div>
-                    <div class="flex justify-between mt-8">
-                        <button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button>
-                        <button type="submit" id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover transition-all duration-300">Enviar Diagnóstico</button>
-                    </div>
+                    <div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="submit" id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover transition-all duration-300">Enviar Diagnóstico</button></div>
                 </div>
-
                 <div class="slide" id="slide8">
                     <div class="text-center">
                         <h2 class="text-3xl font-bold text-gray-800 mb-6">Diagnóstico Enviado com Sucesso!</h2>
-                        <p class="text-lg text-gray-600 mb-8">
-                            Obrigado por confiar na Chatmind. Recebemos suas informações e nossa equipe de especialistas entrará em contato em breve com uma proposta personalizada.
-                        </p>
-                        <div class="bg-gray-50 p-6 rounded-lg mb-8">
-                            <h3 class="font-semibold text-gray-800 mb-4">Próximos Passos:</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                                <div class="flex items-start"><div class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1 flex-shrink-0">1</div><div><h4 class="font-semibold text-gray-800">Análise Técnica</h4><p class="text-gray-600 text-sm">Nossa equipe analisará suas necessidades específicas.</p></div></div>
-                                <div class="flex items-start"><div class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1 flex-shrink-0">2</div><div><h4 class="font-semibold text-gray-800">Proposta Personalizada</h4><p class="text-gray-600 text-sm">Desenvolvimento de solução sob medida.</p></div></div>
-                                <div class="flex items-start"><div class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1 flex-shrink-0">3</div><div><h4 class="font-semibold text-gray-800">Contato Comercial</h4><p class="text-gray-600 text-sm">Apresentação em até 24 horas úteis.</p></div></div>
-                                <div class="flex items-start"><div class="bg-purple-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-1 flex-shrink-0">4</div><div><h4 class="font-semibold text-gray-800">Implementação</h4><p class="text-gray-600 text-sm">Início do projeto após aprovação.</p></div></div>
-                            </div>
-                        </div>
+                        <p class="text-lg text-gray-600 mb-8">Obrigado por confiar na Chatmind. Recebemos suas informações e nossa equipe de especialistas entrará em contato em breve.</p>
                         <button type="button" id="resetBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Realizar Novo Diagnóstico</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let currentSlide = 1;
@@ -289,7 +152,7 @@
                 const progressPercentage = Math.max(0, (currentSlide - 1) / (totalSlides - 2) * 100);
                 progressBar.style.width = `${progressPercentage}%`;
                 currentStepEl.textContent = Math.min(currentSlide, totalSlides - 1);
-                totalStepsEl.textContent = totalSlides - 1; 
+                totalStepsEl.textContent = totalSlides - 1;
             }
 
             function showSlide(slideNumber) {
@@ -302,10 +165,8 @@
                 });
                 updateProgress();
             }
-            
-            function validateEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
-            }
+
+            function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase()); }
             
             function showError(input, message) {
                 const errorDisplay = input.nextElementSibling;
@@ -327,17 +188,14 @@
             function validateCurrentSlide() {
                 let isValid = true;
                 const currentSlideElement = document.getElementById(`slide${currentSlide}`);
-                
                 currentSlideElement.querySelectorAll('input, textarea').forEach(clearError);
-                
-                const requiredInputs = currentSlideElement.querySelectorAll('input[required], textarea[required]');
+                const requiredInputs = currentSlideElement.querySelectorAll('input[required]');
                 requiredInputs.forEach(input => {
                     if (input.value.trim() === '') {
                         showError(input, 'Este campo é obrigatório.');
                         isValid = false;
                     }
                 });
-
                 if (currentSlide === 7) {
                     const email = document.getElementById('email');
                     if (email.value.trim() !== '' && !validateEmail(email.value.trim())) {
@@ -358,33 +216,17 @@
                     showSlide(currentSlide);
                 }
             }
-            
-            document.querySelectorAll('.btn-next').forEach(button => {
-                button.addEventListener('click', () => navigate('next'));
-            });
 
-            document.querySelectorAll('.btn-prev').forEach(button => {
-                button.addEventListener('click', () => navigate('prev'));
-            });
-
-            document.getElementById('resetBtn').addEventListener('click', () => {
-                location.reload();
-            });
-            
+            document.querySelectorAll('.btn-next').forEach(b => b.addEventListener('click', () => navigate('next')));
+            document.querySelectorAll('.btn-prev').forEach(b => b.addEventListener('click', () => navigate('prev')));
+            document.getElementById('resetBtn').addEventListener('click', () => location.reload());
             document.querySelectorAll('.option-card').forEach(card => {
-                card.addEventListener('click', (event) => {
-                    const currentCard = event.currentTarget;
-                    const slide = currentCard.closest('.slide');
-                    const hiddenInput = slide.querySelector('input[type="hidden"]');
-                    const nextButton = slide.querySelector('.btn-next');
-
+                card.addEventListener('click', () => {
+                    const slide = card.closest('.slide');
+                    slide.querySelector('input[type="hidden"]').value = card.dataset.value;
                     slide.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-                    currentCard.classList.add('selected');
-                    
-                    if(hiddenInput) {
-                        hiddenInput.value = currentCard.dataset.value;
-                    }
-                    
+                    card.classList.add('selected');
+                    const nextButton = slide.querySelector('.btn-next');
                     if (nextButton && nextButton.disabled) {
                         nextButton.disabled = false;
                         nextButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
@@ -392,47 +234,38 @@
                     }
                 });
             });
-            
-            form.addEventListener('submit', async (e) => {
+
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 if (!validateCurrentSlide()) return;
 
                 const submitButton = document.getElementById('submitBtn');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Enviando...';
-                
+
+                // URL do seu script do Google
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbyiktDb5_YrXqIJgdyw5wIUScBoAFSZszM2DFnEQfKGjJL4dmiSboCrUg4H2T9C3Z6l/exec';
                 const formData = new FormData(form);
 
-                const dores = Array.from(form.querySelectorAll('input[name="dores"]:checked'))
-                                 .map(cb => cb.value)
-                                 .join('; ');
-                formData.set('dores', dores);
-
-                // ↓↓↓↓↓↓ SUA URL FOI INSERIDA AQUI ↓↓↓↓↓↓
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbyiktDb5_YrXqIJgdyw5wIUScBoAFSZszM2DFnEQfKGjJL4dmiSboCrUg4H2T9C3Z6l/exec';
-                // ↑↑↑↑↑↑ SUA URL FOI INSERIDA AQUI ↑↑↑↑↑↑
-                
-                try {
-                    // O método fetch envia os dados do formulário para a URL do seu script.
-                    await fetch(scriptURL, { method: 'POST', body: formData });
-                    
-                    // Se a requisição foi enviada (mesmo que a resposta seja opaca), consideramos sucesso.
-                    console.log('Dados enviados com sucesso!');
-                    currentSlide++;
-                    showSlide(currentSlide); // Avança para a tela de "Obrigado"
-
-                } catch (error) {
-                    console.error('Erro ao enviar dados:', error);
-                    alert('Houve um erro ao enviar seu diagnóstico. Verifique sua conexão com a internet e tente novamente.');
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Enviar Diagnóstico';
-                }
+                fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(response => {
+                        // A resposta do Google Scripts em modo no-cors é opaca, então não podemos ler o status.
+                        // Se não houver um erro de rede, assumimos que o envio funcionou.
+                        console.log('Sucesso! Resposta recebida.', response);
+                        currentSlide++;
+                        showSlide(currentSlide); // Avança para a tela de "Obrigado"
+                    })
+                    .catch(error => {
+                        // Este bloco 'catch' é ativado por erros de rede, DNS ou CORS.
+                        console.error('Erro no envio do formulário:', error);
+                        alert('Houve um erro ao enviar seu diagnóstico. Verifique sua conexão com a internet e tente novamente.');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Enviar Diagnóstico';
+                    });
             });
             
-            // Inicializa o formulário no primeiro slide
             updateProgress();
         });
     </script>
 </body>
-
 </html>

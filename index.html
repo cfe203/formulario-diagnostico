@@ -1,41 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatmind - Diagnóstico Empresarial Gratuito</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chatmind - Diagnóstico Empresarial Gratuito</title><script src="https://cdn.tailwindcss.com"></script>
     <style>
-        *, *::before, *::after { box-sizing: border-box; }
-        body { background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
-        .slide-container { position: relative; min-height: 480px; }
-        .slide { display: none; opacity: 0; transform: translateX(30px); transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; position: absolute; width: calc(100% - 6rem); }
-        @media (max-width: 768px) { .slide { width: calc(100% - 2rem); } }
-        .slide.active { display: block; opacity: 1; transform: translateX(0); position: relative; }
-        .progress-bar { transition: width 0.4s ease-in-out; }
-        .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
-        .fade-in { animation: fadeIn 0.8s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .option-card.selected { border-color: #7c3aed; background-color: #f3f4f6; box-shadow: 0 0 0 2px #a78bfa; }
-        .input-error { border-color: #ef4444 !important; }
-        .error-message { color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem; display: none; }
-        .error-message.show { display: block; }
+        body { box-sizing: border-box; } .slide-container { position: relative; min-height: 480px; } .slide { display: none; opacity: 0; transform: translateX(30px); transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; position: absolute; width: calc(100% - 6rem); } @media (max-width: 768px) { .slide { width: calc(100% - 2rem); } } .slide.active { display: block; opacity: 1; transform: translateX(0); position: relative; } .progress-bar { transition: width 0.4s ease-in-out; } .gradient-bg { background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%); } .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); } .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); } .fade-in { animation: fadeIn 0.8s ease-in-out; } @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } .option-card.selected { border-color: #7c3aed; background-color: #f3f4f6; box-shadow: 0 0 0 2px #a78bfa; } .input-error { border-color: #ef4444 !important; } .error-message { color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem; display: none; } .error-message.show { display: block; }
     </style>
 </head>
 <body class="gradient-bg min-h-screen flex items-center justify-center p-4">
-
     <div class="container mx-auto w-full max-w-4xl">
-        <header class="text-center mb-8 fade-in">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-wider"> CHATMIND </h1>
-            <p class="text-xl text-white/90 max-w-2xl mx-auto"> Soluções Inteligentes em Automação e IA para Empresas </p>
-        </header>
-        <div class="mb-8">
-            <div class="bg-white/20 rounded-full h-2"><div id="progressBar" class="progress-bar bg-white h-2 rounded-full" style="width: 0%;"></div></div>
-            <p class="text-white/80 text-center mt-2">Etapa <span id="currentStep">1</span> de <span id="totalSteps">7</span></p>
-        </div>
+        <header class="text-center mb-8 fade-in"><h1 class="text-4xl md:text-6xl font-bold text-white mb-4 tracking-wider"> CHATMIND </h1><p class="text-xl text-white/90 max-w-2xl mx-auto"> Soluções Inteligentes em Automação e IA para Empresas </p></header>
+        <div class="mb-8"><div class="bg-white/20 rounded-full h-2"><div id="progressBar" class="progress-bar bg-white h-2 rounded-full"></div></div><p class="text-white/80 text-center mt-2">Etapa <span id="currentStep">1</span> de <span id="totalSteps">7</span></p></div>
         <div class="bg-white rounded-2xl card-shadow p-8 md:p-12 overflow-hidden">
-            <form id="diagnosticsForm" class="slide-container">
+            <form id="diagnosticsForm" class="slide-container" method="POST" action="https://script.google.com/macros/s/AKfycbwxqZuOqg1fvpWwCtHpweYMXlZ66HVmNOidcxK6k7nXDRENI-t5IxvRO_TO-zD7abMG/exec" target="hidden_iframe">
                 <div class="slide active" id="slide1">
                     <div class="text-center"><h2 class="text-3xl font-bold text-gray-800 mb-6">Diagnóstico Empresarial Gratuito</h2><p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">Responda a algumas perguntas para descobrirmos como a automação e IA podem impulsionar seu negócio.</p><div class="bg-gray-50 p-6 rounded-lg mb-8 max-w-lg mx-auto"><h3 class="font-semibold text-gray-800 mb-3">Este diagnóstico inclui:</h3><ul class="text-left text-gray-600 space-y-2 list-disc list-inside"><li>Análise das necessidades do seu negócio</li><li>Identificação de oportunidades de automação</li><li>Proposta comercial personalizada</li><li>Consultoria inicial sem compromisso</li></ul></div><button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover transition-all duration-300">Iniciar Diagnóstico</button></div>
                 </div>
@@ -52,49 +28,41 @@
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Objetivos de Melhoria</h2><p class="text-gray-600 mb-4">Descreva os principais pontos que você gostaria de otimizar ou automatizar:</p><textarea id="melhorias" name="melhorias" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg h-40 resize-none" placeholder="Ex: Automatizar o atendimento inicial, integrar sistemas..."></textarea><div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" class="btn-next bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Continuar</button></div>
                 </div>
                 <div class="slide" id="slide6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Conhecimento sobre IA</h2><p class="text-gray-600 mb-6">Qual é o seu nível de conhecimento sobre como a IA pode ajudar seu negócio?</p><div class="space-y-4"><div data-value="Iniciante" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Iniciante</h3><p class="text-gray-600 pointer-events-none">Preciso de orientação completa sobre as possibilidades.</p></div><div data-value="Intermediário" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Intermediário</h3><p class="text-gray-600 pointer-events-none">Tenho ideias, mas gostaria de validar a viabilidade.</p></div><div data-value="Avançado" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Avançado</h3><p class="text-gray-600 pointer-events-none">Tenho clareza sobre as soluções e busco implementação.</p></div><input type="hidden" id="conhecimentoIA" name="conhecimentoIA"></div><div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" id="nextBtn6" class="btn-next bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Continuar</button></div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Conhecimento sobre IA</h2><p class="text-gray-600 mb-6">Qual é o seu nível de conhecimento sobre como a IA pode ajudar seu negócio?</p><div class="space-y-4"><div data-value="Iniciante" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Iniciante</h3><p class="text-gray-600 pointer-events-none">Preciso de orientação completa.</p></div><div data-value="Intermediário" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Intermediário</h3><p class="text-gray-600 pointer-events-none">Tenho ideias, mas gostaria de validar.</p></div><div data-value="Avançado" class="option-card p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-gray-50 transition-all duration-300"><h3 class="font-semibold text-lg mb-2 pointer-events-none">Avançado</h3><p class="text-gray-600 pointer-events-none">Tenho clareza sobre as soluções.</p></div><input type="hidden" id="conhecimentoIA" name="conhecimentoIA"></div><div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="button" id="nextBtn6" class="btn-next bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Continuar</button></div>
                 </div>
                 <div class="slide" id="slide7">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">Dados para Contato</h2><div class="space-y-6"><div><label for="email" class="block text-gray-700 font-semibold mb-2">E-mail Corporativo *</label><input type="email" id="email" name="email" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="seu@empresa.com" required><p class="error-message"></p></div><div><label for="whatsapp" class="block text-gray-700 font-semibold mb-2">WhatsApp *</label><input type="tel" id="whatsapp" name="whatsapp" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg" placeholder="(11) 99999-9999" required><p class="error-message"></p></div><div><label for="horario" class="block text-gray-700 font-semibold mb-2">Melhor Horário para Contato</label><select id="horario" name="horario" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg bg-white"><option value="">Selecione o horário preferencial</option><option value="Manhã (8h às 12h)">Manhã (8h às 12h)</option><option value="Tarde (12h às 18h)">Tarde (12h às 18h)</option><option value="Noite (18h às 22h)">Noite (18h às 22h)</option><option value="Qualquer horário">Qualquer horário comercial</option></select></div><div><label for="orcamento" class="block text-gray-700 font-semibold mb-2">Orçamento Estimado (Opcional)</label><select id="orcamento" name="orcamento" class="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none text-lg bg-white"><option value="">Selecione uma faixa de investimento</option><option value="Até R$ 5.000">Até R$ 5.000</option><option value="R$ 5.000 - R$ 15.000">R$ 5.000 - R$ 15.000</option><option value="R$ 15.000 - R$ 30.000">R$ 15.000 - R$ 30.000</option><option value="R$ 30.000 - R$ 50.000">R$ 30.000 - R$ 50.000</option><option value="Acima de R$ 50.000">Acima de R$ 50.000</option><option value="A definir">A definir após apresentação</option></select></div></div><div class="flex justify-between mt-8"><button type="button" class="btn-prev bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-lg font-semibold">Voltar</button><button type="submit" id="submitBtn" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover transition-all duration-300">Enviar Diagnóstico</button></div>
                 </div>
-                <div class="slide" id="slide8">
-                    <div class="text-center"><h2 class="text-3xl font-bold text-gray-800 mb-6">Diagnóstico Enviado com Sucesso!</h2><p class="text-lg text-gray-600 mb-8">Obrigado por confiar na Chatmind. Recebemos suas informações e nossa equipe entrará em contato em breve.</p><button type="button" id="resetBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold btn-hover transition-all duration-300">Realizar Novo Diagnóstico</button></div>
-                </div>
             </form>
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             let currentSlide = 1;
-            const totalSlides = 8;
+            const totalSlides = 7;
             const form = document.getElementById('diagnosticsForm');
             const slides = document.querySelectorAll('.slide');
-            const formDataStore = {}; // Usaremos este objeto para guardar os dados
 
             function showSlide(slideNumber) {
                 slides.forEach(slide => slide.classList.remove('active'));
                 const targetSlide = document.getElementById(`slide${slideNumber}`);
-                if (targetSlide) {
-                    setTimeout(() => targetSlide.classList.add('active'), 50);
-                }
+                if (targetSlide) setTimeout(() => targetSlide.classList.add('active'), 50);
                 updateProgress();
             };
 
             function updateProgress() {
-                const progressBar = document.getElementById('progressBar');
-                const currentStepEl = document.getElementById('currentStep');
-                const totalStepsEl = document.getElementById('totalSteps');
-                const progressPercentage = Math.max(0, (currentSlide - 1) / (totalSlides - 2) * 100);
-                progressBar.style.width = `${progressPercentage}%`;
-                currentStepEl.textContent = Math.min(currentSlide, totalSlides - 1);
-                totalStepsEl.textContent = totalSlides - 1;
+                const progressPercentage = Math.max(0, (currentSlide - 1) / (totalSlides - 1) * 100);
+                document.getElementById('progressBar').style.width = `${progressPercentage}%`;
+                document.getElementById('currentStep').textContent = currentSlide;
+                document.getElementById('totalSteps').textContent = totalSlides;
             }
             
             function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase()); }
             
             function showError(input, message) {
                 const errorDisplay = input.nextElementSibling;
-                if (errorDisplay && errorDisplay.classList.contains('error-message')) {
+                if (errorDisplay) {
                     errorDisplay.innerText = message;
                     errorDisplay.classList.add('show');
                 }
@@ -103,18 +71,15 @@
 
             function clearError(input) {
                 const errorDisplay = input.nextElementSibling;
-                if (errorDisplay && errorDisplay.classList.contains('error-message')) {
-                    errorDisplay.classList.remove('show');
-                }
+                if (errorDisplay) errorDisplay.classList.remove('show');
                 input.classList.remove('input-error');
             }
 
             function validateCurrentSlide() {
                 let isValid = true;
-                const currentSlideElement = document.getElementById(`slide${currentSlide}`);
-                currentSlideElement.querySelectorAll('input, textarea').forEach(clearError);
-                const requiredInputs = currentSlideElement.querySelectorAll('input[required]');
-                requiredInputs.forEach(input => {
+                const slideElement = document.getElementById(`slide${currentSlide}`);
+                slideElement.querySelectorAll('input[required]').forEach(input => {
+                    clearError(input);
                     if (input.value.trim() === '') {
                         showError(input, 'Este campo é obrigatório.');
                         isValid = false;
@@ -126,51 +91,24 @@
                 return isValid;
             }
 
-            function collectDataFromCurrentSlide() {
-                const currentSlideElement = document.getElementById(`slide${currentSlide}`);
-                const inputs = currentSlideElement.querySelectorAll('input[name], select[name], textarea[name]');
-                inputs.forEach(input => {
-                    if (input.type === 'checkbox') {
-                        if (!formDataStore[input.name]) { formDataStore[input.name] = []; }
-                        const index = formDataStore[input.name].indexOf(input.value);
-                        if (input.checked && index === -1) {
-                            formDataStore[input.name].push(input.value);
-                        } else if (!input.checked && index > -1) {
-                            formDataStore[input.name].splice(index, 1);
-                        }
-                    } else if (input.type !== 'hidden') {
-                        formDataStore[input.name] = input.value;
-                    } else { // Para os 'option-cards'
-                        formDataStore[input.name] = input.value;
-                    }
-                });
-            }
-
             function navigate(direction) {
-                if (direction === 'next') {
+                if (direction === 'next' && currentSlide < totalSlides) {
                     if (!validateCurrentSlide()) return;
-                    collectDataFromCurrentSlide();
-                    if (currentSlide < totalSlides) {
-                        currentSlide++;
-                        showSlide(currentSlide);
-                    }
+                    currentSlide++;
+                    showSlide(currentSlide);
                 } else if (direction === 'prev' && currentSlide > 1) {
                     currentSlide--;
                     showSlide(currentSlide);
                 }
             }
 
-            // --- Event Listeners ---
             document.querySelectorAll('.btn-next').forEach(b => b.addEventListener('click', () => navigate('next')));
             document.querySelectorAll('.btn-prev').forEach(b => b.addEventListener('click', () => navigate('prev')));
-            document.getElementById('resetBtn').addEventListener('click', () => location.reload());
 
             document.querySelectorAll('.option-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const slide = card.closest('.slide');
-                    const hiddenInput = slide.querySelector('input[type="hidden"]');
-                    hiddenInput.value = card.dataset.value;
-                    formDataStore[hiddenInput.name] = card.dataset.value; // Atualiza nosso objeto de dados
+                    slide.querySelector('input[type="hidden"]').value = card.dataset.value;
                     slide.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     const nextButton = slide.querySelector('.btn-next');
@@ -182,35 +120,29 @@
                 });
             });
 
-            // --- LÓGICA DE ENVIO DO FORMULÁRIO ---
             form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (!validateCurrentSlide()) return;
-                collectDataFromCurrentSlide(); // Coleta os dados do último slide
+                if (!validateCurrentSlide()) {
+                    e.preventDefault();
+                    return;
+                }
+                // Combina os valores dos checkboxes em um único campo antes de enviar
+                const dores = Array.from(form.querySelectorAll('input[name="dores"]:checked')).map(cb => cb.value).join('; ');
+                let hiddenInput = form.querySelector('input[name="dores_combined"]');
+                if (!hiddenInput) {
+                    hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'dores';
+                    form.appendChild(hiddenInput);
+                }
+                hiddenInput.value = dores;
 
                 const submitButton = document.getElementById('submitBtn');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Enviando...';
-
-                // Prepara os dados finais para envio
-                const finalData = { ...formDataStore };
-                if (finalData.dores) {
-                    finalData.dores = finalData.dores.join('; ');
-                } else {
-                    finalData.dores = ''; // Garante que o campo exista mesmo se nenhum for marcado
-                }
-                
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbyiktDb5_YrXqIJgdyw5wIUScBoAFSZszM2DFnEQfKGjJL4dmiSboCrUg4H2T9C3Z6l/exec';
-
-                fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(finalData).toString() // Converte o objeto para o formato correto
-                })
-                .then(() => {
-                    console.log('Sucesso! O formulário foi enviado.');
-                    currentSlide = 8;
+            });
+            
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

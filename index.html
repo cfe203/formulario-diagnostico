@@ -6,11 +6,11 @@
     <title>Chatmind - Diagnóstico Empresarial Gratuito</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilos Gerais */
         *, *::before, *::after { box-sizing: border-box; }
         body { background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
         .slide-container { position: relative; min-height: 480px; }
-        .slide { display: none; opacity: 0; transform: translateX(30px); transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; position: absolute; width: 100%; }
+        .slide { display: none; opacity: 0; transform: translateX(30px); transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; position: absolute; width: calc(100% - 6rem); }
+        @media (max-width: 768px) { .slide { width: calc(100% - 2rem); } }
         .slide.active { display: block; opacity: 1; transform: translateX(0); position: relative; }
         .progress-bar { transition: width 0.4s ease-in-out; }
         .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
@@ -69,15 +69,13 @@
             const totalSlides = 8;
             const form = document.getElementById('diagnosticsForm');
             const slides = document.querySelectorAll('.slide');
+            const formDataStore = {}; // Usaremos este objeto para guardar os dados
 
             function showSlide(slideNumber) {
-                // Esconde todos os slides
                 slides.forEach(slide => slide.classList.remove('active'));
-                
-                // Mostra o slide correto
                 const targetSlide = document.getElementById(`slide${slideNumber}`);
                 if (targetSlide) {
-                    setTimeout(() => targetSlide.classList.add('active'), 50); // Delay para a animação
+                    setTimeout(() => targetSlide.classList.add('active'), 50);
                 }
                 updateProgress();
             };
@@ -86,17 +84,14 @@
                 const progressBar = document.getElementById('progressBar');
                 const currentStepEl = document.getElementById('currentStep');
                 const totalStepsEl = document.getElementById('totalSteps');
-                // A barra de progresso vai de 0% a 100% ao longo dos 7 passos do formulário
                 const progressPercentage = Math.max(0, (currentSlide - 1) / (totalSlides - 2) * 100);
                 progressBar.style.width = `${progressPercentage}%`;
                 currentStepEl.textContent = Math.min(currentSlide, totalSlides - 1);
-                totalStepsEl.textContent = totalSlides - 1; // O passo 8 é a tela de "obrigado".
+                totalStepsEl.textContent = totalSlides - 1;
             }
             
-            function validateEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
-            }
-
+            function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase()); }
+            
             function showError(input, message) {
                 const errorDisplay = input.nextElementSibling;
                 if (errorDisplay && errorDisplay.classList.contains('error-message')) {
@@ -117,9 +112,7 @@
             function validateCurrentSlide() {
                 let isValid = true;
                 const currentSlideElement = document.getElementById(`slide${currentSlide}`);
-                
                 currentSlideElement.querySelectorAll('input, textarea').forEach(clearError);
-                
                 const requiredInputs = currentSlideElement.querySelectorAll('input[required]');
                 requiredInputs.forEach(input => {
                     if (input.value.trim() === '') {
@@ -133,17 +126,40 @@
                 return isValid;
             }
 
+            function collectDataFromCurrentSlide() {
+                const currentSlideElement = document.getElementById(`slide${currentSlide}`);
+                const inputs = currentSlideElement.querySelectorAll('input[name], select[name], textarea[name]');
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox') {
+                        if (!formDataStore[input.name]) { formDataStore[input.name] = []; }
+                        const index = formDataStore[input.name].indexOf(input.value);
+                        if (input.checked && index === -1) {
+                            formDataStore[input.name].push(input.value);
+                        } else if (!input.checked && index > -1) {
+                            formDataStore[input.name].splice(index, 1);
+                        }
+                    } else if (input.type !== 'hidden') {
+                        formDataStore[input.name] = input.value;
+                    } else { // Para os 'option-cards'
+                        formDataStore[input.name] = input.value;
+                    }
+                });
+            }
+
             function navigate(direction) {
-                if (direction === 'next' && currentSlide < totalSlides) {
+                if (direction === 'next') {
                     if (!validateCurrentSlide()) return;
-                    currentSlide++;
-                    showSlide(currentSlide);
+                    collectDataFromCurrentSlide();
+                    if (currentSlide < totalSlides) {
+                        currentSlide++;
+                        showSlide(currentSlide);
+                    }
                 } else if (direction === 'prev' && currentSlide > 1) {
                     currentSlide--;
                     showSlide(currentSlide);
                 }
             }
-            
+
             // --- Event Listeners ---
             document.querySelectorAll('.btn-next').forEach(b => b.addEventListener('click', () => navigate('next')));
             document.querySelectorAll('.btn-prev').forEach(b => b.addEventListener('click', () => navigate('prev')));
@@ -152,7 +168,9 @@
             document.querySelectorAll('.option-card').forEach(card => {
                 card.addEventListener('click', () => {
                     const slide = card.closest('.slide');
-                    slide.querySelector('input[type="hidden"]').value = card.dataset.value;
+                    const hiddenInput = slide.querySelector('input[type="hidden"]');
+                    hiddenInput.value = card.dataset.value;
+                    formDataStore[hiddenInput.name] = card.dataset.value; // Atualiza nosso objeto de dados
                     slide.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     const nextButton = slide.querySelector('.btn-next');
@@ -168,57 +186,31 @@
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 if (!validateCurrentSlide()) return;
+                collectDataFromCurrentSlide(); // Coleta os dados do último slide
 
                 const submitButton = document.getElementById('submitBtn');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Enviando...';
 
-                // *** ALTERAÇÃO IMPORTANTE AQUI ***
-                // Em vez de usar FormData, criamos um objeto simples. Isso é mais compatível.
-                const data = {
-                    nome: document.getElementById('nome').value,
-                    empresa: document.getElementById('empresa').value,
-                    cargo: document.getElementById('cargo').value,
-                    tipoEmpresa: document.getElementById('tipoEmpresa').value,
-                    dores: Array.from(document.querySelectorAll('input[name="dores"]:checked')).map(cb => cb.value).join('; '),
-                    melhorias: document.getElementById('melhorias').value,
-                    conhecimentoIA: document.getElementById('conhecimentoIA').value,
-                    email: document.getElementById('email').value,
-                    whatsapp: document.getElementById('whatsapp').value,
-                    horario: document.getElementById('horario').value,
-                    orcamento: document.getElementById('orcamento').value
-                };
-
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbyiktDb5_YrXqIJgdyw5wIUScBoAFSZszM2DFnEQfKGjJL4dmiSboCrUg4H2T9C3Z6l/exec';
-
-                // Convertemos o objeto para um formato que o fetch pode enviar
-                const body = new FormData();
-                for (const key in data) {
-                    body.append(key, data[key]);
+                // Prepara os dados finais para envio
+                const finalData = { ...formDataStore };
+                if (finalData.dores) {
+                    finalData.dores = finalData.dores.join('; ');
+                } else {
+                    finalData.dores = ''; // Garante que o campo exista mesmo se nenhum for marcado
                 }
                 
-                fetch(scriptURL, { 
-                    method: 'POST', 
-                    body: body,
-                    mode: 'no-cors' // Mantém o modo no-cors para evitar bloqueios
-                 })
-                .then(response => {
-                    console.log('Sucesso! O formulário foi enviado.');
-                    // Ao clicar no último botão, esta mensagem aparece no console do navegador.
-                    // E a tela de "Obrigado" (Slide 8) é exibida.
-                    currentSlide = 8;
-                    showSlide(currentSlide); 
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbyiktDb5_YrXqIJgdyw5wIUScBoAFSZszM2DFnEQfKGjJL4dmiSboCrUg4H2T9C3Z6l/exec';
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams(finalData).toString() // Converte o objeto para o formato correto
                 })
-                .catch(error => {
-                    console.error('Erro detalhado:', error);
-                    alert('Houve um erro no envio. Pressione F12, clique na aba "Console" e verifique a mensagem em vermelho para identificar o problema.');
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Enviar Diagnóstico';
-                });
-            });
-            
-            updateProgress(); // Inicia a barra de progresso
-        });
-    </script>
-</body>
-</html>
+                .then(() => {
+                    console.log('Sucesso! O formulário foi enviado.');
+                    currentSlide = 8;
